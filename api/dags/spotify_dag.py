@@ -3,7 +3,7 @@ from datetime import datetime
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from airflow.utils.dates import days_ago
-from spotify_job import spotify_etl_func
+from spotify_extract_job import spotify_etl_func
 from airflow.utils.dates import days_ago
 
 my_args = {

@@ -18,6 +18,14 @@
 
 > cd api && airflow webserver
 
+### Venv
+
+> python3 -m venv env
+
+> pip freeze > requirements.txt (To generate)
+
+> pip install -r requirements.txt
+
 ## Web Scraper
 
 - Selenium / Beautiful Soup
