@@ -8,10 +8,10 @@ import wikipedia
 import sys
 
 
-def get_track_details(track, artist):
+def get_track_details(artist, track):
     # Get year
     try:
-        r = requests.get('https://musicbrainz.org/search?query=Mockingbird+Eminem&type=release&limit=25&method=indexed')
+        r = requests.get('https://musicbrainz.org/search?query={}+{}&type=release&method=indexed'.format(artist, track).replace(' ', '+'))
         soup = BeautifulSoup(r.content, 'lxml')
         year = soup.find_all('span', 'release-date')[0] # Select first result
         print(year)
@@ -20,7 +20,7 @@ def get_track_details(track, artist):
 
     # Get genre
     try:
-        w = requests.get('https://en.wikipedia.org/wiki/Eminem')
+        w = requests.get('https://en.wikipedia.org/wiki/{}'.format(artist).replace(' ', '_'))
         soupW = BeautifulSoup(w.content, 'lxml')
 
         bday = soupW.find_all('span', class_='bday')
@@ -32,4 +32,4 @@ def get_track_details(track, artist):
 
 
 if __name__ == '__main__':
-    get_track_details("Mockingbird", "Eminem")
+    get_track_details("50 cent", "21 questions")
