@@ -33,7 +33,7 @@ CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 
 def spotify_etl_func():
 
-    # Steup the Developer ENV from Spotify Website
+    # Setup the Developer ENV from Spotify Website
     spotify_client_id = CLIENT_ID
     spotify_client_secret = CLIENT_SECRET
     spotify_redirect_url = "http://localhost:8080"
@@ -105,4 +105,4 @@ def spotify_etl_func():
     return "Finished Extract, Transform, Load"
 
 # use for testing - Delete for Airflow
-#spotify_etl_func()
+# spotify_etl_func()
