@@ -9,7 +9,7 @@ from airflow.utils.dates import days_ago
 my_args = {
     'owner': 'airflow',
     'depends_on_past': False,
-    'start_date': days_ago(2),
+    'start_date': days_ago(1),
     'email': ['job@job.com'],
     'email_on_failure': True,
     'email_on_retry': True,
@@ -17,10 +17,10 @@ my_args = {
     'retry_delay': timedelta(minutes=5),
 }
 my_dag = DAG(
-    'spotify_etl_dag',
+    'spotify_etl',
     default_args = my_args,
     description= 'Spotify ETL - Extract API Call',
-    schedule_interval= '*/15 * * * *'
+    schedule_interval= '*/5 * * * *'
 )
 
 
