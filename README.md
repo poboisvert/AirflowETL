@@ -38,4 +38,4 @@ The loading step uses (1) SQL to query the data (2) and python to automate a wee
 
 ## Web Scraper
 
-- Selenium / Beautiful Soup
+Using Beautiful Soup, the python service is schedule to confirm the birthday date and the release date from Wikipedia and musicbrainz.org.
