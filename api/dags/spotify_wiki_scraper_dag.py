@@ -9,18 +9,19 @@ from airflow.utils.dates import days_ago
 my_args = {
     'owner': 'airflow',
     'depends_on_past': False,
-    'start_date': days_ago(2),
+    'start_date': days_ago(1),
     'email': ['job@job.com'],
     'email_on_failure': True,
     'email_on_retry': True,
     'retries': 1,
     'retry_delay': timedelta(minutes=5),
 }
+
 my_dag = DAG(
     'spotify_wiki_dag',
     default_args = my_args,
     description= 'Spotify Wiki Information',
-    schedule_interval= '*/20 * * * *'
+    schedule_interval= '*/2 * * * *'
 )
 
 

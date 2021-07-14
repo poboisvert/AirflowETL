@@ -5,7 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def get_track_details(artist, track):
+def get_track_details(artist = "2Pac", track = "California Love"):
     # Get year
     try:
         r = requests.get('https://musicbrainz.org/search?query={}+{}&type=release&method=indexed'.format(artist, track).replace(' ', '+'))
@@ -23,10 +23,9 @@ def get_track_details(artist, track):
         bday = soupW.find_all('span', class_='bday')
         print(bday)
 
-        return year, bday
+        return 1
     except:
-        return bday, 'Bday Not Found'
+        return 'Bday Not Found'
 
 
-if __name__ == '__main__':
-    get_track_details("50 cent", "21 questions")
+get_track_details()
