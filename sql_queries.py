@@ -27,7 +27,7 @@ SONG_DATA       = config.get('S3', 'SONG_DATA')
 staging_events_table_create= (
    """
    CREATE TABLE staging_events_table (
-      stagingEventId bigint IDENTITY(0,1) PRIMARY KEY,
+      id VARCHAR(500) PRIMARY KEY,
       song_id VARCHAR(500),
       song_name VARCHAR(500),
       img VARCHAR(500),
@@ -43,8 +43,17 @@ staging_events_table_create= (
 )
 
 # STAGING TABLES
-
 staging_events_copy = (
+    """
+    COPY staging_events_table (id,song_id, song_name, img, duration_ms,song_explicit,url,popularity,date_time_played,album_id,artist_id)
+    FROM {}
+    credentials 'aws_access_key_id={};aws_secret_access_key={}'
+    CSV
+    region 'us-east-1';
+    """
+).format(config['S3']['log_data'], config['IAM_ROLE']['arn'], config['S3']['log_jsonpath'])
+
+staging_events_copy1 = (
    """
    copy staging_events_table (
       artist, auth, firstName, gender,itemInSession, lastName, 

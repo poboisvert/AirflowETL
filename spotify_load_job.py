@@ -40,6 +40,8 @@ def main():
     conn = psycopg2.connect("host={} dbname={} user={} password={} port={}".format(*config['CLUSTER'].values()))
     cur = conn.cursor()
     
+
+    # Log data into the table
     load_staging_tables(cur, conn)
     #insert_tables(cur, conn)
 

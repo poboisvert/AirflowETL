@@ -101,7 +101,7 @@ Using Beautiful Soup, the python service is schedule to confirm the birthday dat
 - Wikipedia
 - musicbrainz.org
 
-## reference
+## References
 
 - https://ruslanmv.com/blog/Create-Data-Warehouse-with-Redshift
 
