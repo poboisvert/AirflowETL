@@ -28,24 +28,16 @@ staging_events_table_create= (
    """
    CREATE TABLE staging_events_table (
       stagingEventId bigint IDENTITY(0,1) PRIMARY KEY,
-      artist VARCHAR(500),
-      auth VARCHAR(20),
-      firstName VARCHAR(500),
-      gender CHAR(1),
-      itemInSession SMALLINT,
-      lastName VARCHAR(500),
-      length NUMERIC,
-      level VARCHAR(10),
-      location VARCHAR(500),
-      method VARCHAR(20),
-      page VARCHAR(500),
-      registration NUMERIC,
-      sessionId SMALLINT,
-      song VARCHAR,
-      status SMALLINT,
-      ts BIGINT,
-      userAgent VARCHAR(500),
-      userId SMALLINT
+      song_id VARCHAR(500),
+      song_name VARCHAR(500),
+      img VARCHAR(500),
+      duration_ms VARCHAR(500),
+      song_explicit VARCHAR(500),
+      url VARCHAR(500),
+      popularity VARCHAR(500),
+      date_time_played VARCHAR(500),
+      album_id VARCHAR(500),
+      artist_id VARCHAR(500)
     )
    """
 )

@@ -6,7 +6,7 @@ This project is an ETL using Spotipy and general a weekly email of all the songs
 
 This program uses Spotipy, Regex, Apache Airflow and AWS Redshift.
 
-After the extraction, a web scraper get additionnal information (e.g. birthday of the artist) and transform the data using python to clean it up, create unique identifiers, and load it into a Redshift database.
+After the extraction, (1)a web scraper get additionnal information (e.g. birthday of the artist) (2) and transform the data using python to clean it up, create unique identifiers, and load it into a Redshift database.
 
 The loading step uses (1) SQL to query the data (2) and python to automate a weekly email that gets sent to my email giving a summary of my Spotify listening for that week.
 
@@ -86,7 +86,7 @@ Redshift is a fully managed, cloud-based, petabyte-scale data warehouse service 
 
   - python create_cluster_redshift.py
 
-- Init Redshift Database
+- Initialize Redshift Database
 
   - python create_tables.py
 
@@ -104,3 +104,5 @@ Using Beautiful Soup, the python service is schedule to confirm the birthday dat
 ## reference
 
 - https://ruslanmv.com/blog/Create-Data-Warehouse-with-Redshift
+
+- https://hevodata.com/learn/load-csv-to-redshift-3-easy-methods/

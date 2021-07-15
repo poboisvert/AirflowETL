@@ -102,7 +102,7 @@ def create_iam_role():
     print('1.3 Get the IAM role ARN')
     roleArn = iam.get_role(RoleName=DWH_IAM_ROLE_NAME)['Role']['Arn']
 
-    print(roleArn)
+    print("Please add to dwh.cfg :",roleArn)
     return roleArn
 
 def main():
