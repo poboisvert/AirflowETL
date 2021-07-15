@@ -18,7 +18,9 @@ The loading step uses (1) SQL to query the data (2) and python to automate a wee
 
 - create_tables.py : drops (clear) all tables and create all tables
 
-- sql_queries.py : containin all SQL queries with executing create_tables.py
+- python spotify_load_job.py : load the file api/data/db_etl.csv into AWS Redshift
+
+- sql_queries.py : contain all SQL queries with executing create_tables.py
 
 - create_cluster_redshift.py : create the initial redshift cluster and an IAM role to access other AWS services S3
 

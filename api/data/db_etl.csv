@@ -1,4 +1,4 @@
-id,song_id,song_name,img,duration_ms,song_explicit,url,popularity,date_time_played,album_id,artist_id
+,song_id,song_name,img,duration_ms,song_explicit,url,popularity,date_time_played,album_id,artist_id
 1,6QUHWicoDehyYS0UXQwKAR,Ghetto,https://i.scdn.co/image/ab67616d0000b273ac300376b3adefc2b6e751fc,235306,FALSE,https://open.spotify.com/track/6QUHWicoDehyYS0UXQwKAR,47,2021-07-14 02:25:52.938000+00:00,3jb3Qvs8qZ8JZsAzhSuJS1,0z4gvV4rjIZ9wHck67ucSV
 2,3LmuxO8mh3wwIfRUqHJFFy,I'm The Man,https://i.scdn.co/image/ab67616d0000b273f6753fb2198b7fb112f65627,235702,TRUE,https://open.spotify.com/track/3LmuxO8mh3wwIfRUqHJFFy,65,2021-07-14 02:21:57.189000+00:00,1drbmKKBqBbWVaIt0AUKGa,3q7HBObVc0L8jNeTe5Gofh
 3,2I9foKseoFQh07p6sD2voE,Many Men (Wish Death),https://i.scdn.co/image/ab67616d0000b273f7f74100d5cc850e01172cbf,256226,TRUE,https://open.spotify.com/track/2I9foKseoFQh07p6sD2voE,68,2021-07-14 02:18:01.014000+00:00,4ycNE7y1rp5215g1kkqk1P,3q7HBObVc0L8jNeTe5Gofh

@@ -1,5 +1,20 @@
 import configparser
 
+import logging
+
+## importing the load_dotenv from the python-dotenv module
+from dotenv import load_dotenv
+ 
+## using existing module to specify location of the .env file
+from pathlib import Path
+import os
+ 
+logging.basicConfig(level=20, datefmt='%I:%M:%S', format='[%(asctime)s] %(message)s')
+
+
+load_dotenv()
+env_path = Path('.')/'.env'
+load_dotenv(dotenv_path=env_path)
 
 # CONFIG
 config = configparser.ConfigParser()
@@ -48,10 +63,11 @@ staging_events_copy = (
     COPY staging_events_table (id,song_id, song_name, img, duration_ms,song_explicit,url,popularity,date_time_played,album_id,artist_id)
     FROM {}
     credentials 'aws_access_key_id={};aws_secret_access_key={}'
-    CSV
+    csv
+    IGNOREHEADER 1
     region 'us-east-1';
     """
-).format(config['S3']['log_data'], config['IAM_ROLE']['arn'], config['S3']['log_jsonpath'])
+).format(config['S3']['log_data'], os.getenv("KEY_IAM_AWS"), os.getenv("SECRET_IAM_AWS"))
 
 staging_events_copy1 = (
    """
