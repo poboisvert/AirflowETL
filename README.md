@@ -10,6 +10,11 @@ After the extraction, (1)a web scraper get additionnal information (e.g. birthda
 
 The loading step uses (1) SQL to query the data (2) and python to automate a weekly email that gets sent to my email giving a summary of my Spotify listening for that week.
 
+```
+The S3 bucket is under the region: us-west-2
+The Redshit DB is under: us-east-2
+```
+
 ### Preview
 
 ![preview](airflow_init.png)
@@ -41,6 +46,24 @@ CLIENT_SECRET=SPOTIFY_DEV
 KEY_IAM_AWS=AIM_AWS
 SECRET_IAM_AWS=AIM_AWS
 ```
+
+#### Command
+
+- Create Redshift
+
+  - python create_cluster_redshift.py
+
+- Initialize Redshift Database
+
+  - python create_tables.py
+
+- Upload api/data/db_etl.csv to S3 and to SQL Redshift
+
+  - python spotify_load_job.py
+
+- Delete Redshift
+
+  - python delete_cluster_redshift.py
 
 ### Venv
 
@@ -82,20 +105,6 @@ Redshift is a fully managed, cloud-based, petabyte-scale data warehouse service 
 
 - IAM user in our AWS account Give it AdministratorAccess
 
-#### Command
-
-- Create Redshift
-
-  - python create_cluster_redshift.py
-
-- Initialize Redshift Database
-
-  - python create_tables.py
-
-- Delete Redshift
-
-  - python delete_cluster_redshift.py
-
 ## Web Scraper
 
 Using Beautiful Soup, the python service is schedule to confirm the birthday date and the release date from:
@@ -108,3 +117,7 @@ Using Beautiful Soup, the python service is schedule to confirm the birthday dat
 - https://ruslanmv.com/blog/Create-Data-Warehouse-with-Redshift
 
 - https://hevodata.com/learn/load-csv-to-redshift-3-easy-methods/
+
+```
+
+```

@@ -69,18 +69,6 @@ staging_events_copy = (
     """
 ).format(config['S3']['log_data'], os.getenv("KEY_IAM_AWS"), os.getenv("SECRET_IAM_AWS"))
 
-staging_events_copy1 = (
-   """
-   copy staging_events_table (
-      artist, auth, firstName, gender,itemInSession, lastName, 
-      length, level, location, method, page, registration, 
-      sessionId, song, status, ts, userAgent, userId
-   )
-   from {}
-   iam_role {}
-   json {} region 'us-west-2';
-   """
-).format(config['S3']['log_data'], config['IAM_ROLE']['arn'], config['S3']['log_jsonpath'])
 
 
 # FINAL TABLES
