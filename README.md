@@ -2,6 +2,8 @@
 
 ## Project Overview
 
+![preview](init.png)
+
 This project is an ETL using Spotipy and generate a weekly email of all the songs played and web scraper additionnal information for each artist listenned.
 
 This program uses: Spotipy, Regex, Apache Airflow and AWS Redshift.
@@ -129,6 +131,8 @@ Using Beautiful Soup, the python service is schedule to confirm the birthday dat
 - https://hevodata.com/learn/load-csv-to-redshift-3-easy-methods/
 
 - https://www.astronomer.io/guides/managing-dependencies
+
+- https://www.applydatascience.com/airflow/writing-your-first-pipeline/
 
 ```
 

@@ -33,5 +33,5 @@ def get_track_details(artist = "2Pac", track = "California Love"):
     except:
         return 'Bday Not Found'
 
-
-get_track_details()
+if __name__ == '__main__':
+    get_track_details()

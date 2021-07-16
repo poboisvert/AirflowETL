@@ -10,7 +10,7 @@ from spotify_weekly_email_job import spotify_weekly_email_function
 my_args = {
     'owner': 'airflow',
     'depends_on_past': False,
-    'start_date': days_ago(2),
+    'start_date': datetime.now(),
     'email': ['test@test.com'],
     'email_on_failure': True,
     'email_on_retry': True,
@@ -21,8 +21,9 @@ my_dag = DAG(
     'spotify_email_dag',
     default_args = my_args,
     description= 'Spotify Weekly Email',
-    schedule_interval= '5 14 * * 0'
-)
+    #schedule_interval= '* * * * *'
+    schedule_interval='@once'
+    )
 
 
 run_email = PythonOperator(

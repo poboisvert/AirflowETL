@@ -104,5 +104,5 @@ def spotify_etl_func():
     
     return "Finished Extract, Transform, Load"
 
-# use for testing - Delete for Airflow
-spotify_etl_func()
+if __name__ == '__main__':
+    spotify_etl_func()
