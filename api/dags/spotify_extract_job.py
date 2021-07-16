@@ -105,4 +105,4 @@ def spotify_etl_func():
     return "Finished Extract, Transform, Load"
 
 # use for testing - Delete for Airflow
-# spotify_etl_func()
+spotify_etl_func()

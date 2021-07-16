@@ -49,21 +49,27 @@ SECRET_IAM_AWS=AIM_AWS
 
 #### Command
 
-- Create Redshift
+- Step 1: Create Redshift
 
   - python create_cluster_redshift.py
 
-- Initialize Redshift Database
+- Step 2: Initialize Redshift Database
 
   - python create_tables.py
 
-- Upload api/data/db_etl.csv to S3 and to SQL Redshift
+- Step 3: Upload api/data/db_etl.csv to S3 and to SQL Redshift
 
   - python spotify_load_job.py
 
-- Delete Redshift
+- Step 4: Refer the section to run Apache Airflow
+
+- Step 5: Delete Redshift
 
   - python delete_cluster_redshift.py
+
+### Data Pipeline Design
+
+- The ETL pipeline uses Python (pandas), that simplifies data manipulation and the exportation to a csv and boto3 also allows connection to Redshift Database.
 
 ### Venv
 
