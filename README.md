@@ -2,11 +2,11 @@
 
 ## Project Overview
 
-This project is an ETL using Spotipy and general a weekly email of all the songs played and web scraper additionnal information for each artist listenned.
+This project is an ETL using Spotipy and generate a weekly email of all the songs played and web scraper additionnal information for each artist listenned.
 
-This program uses Spotipy, Regex, Apache Airflow and AWS Redshift.
+This program uses: Spotipy, Regex, Apache Airflow and AWS Redshift.
 
-After the extraction, (1)a web scraper get additionnal information (e.g. birthday of the artist) (2) and transform the data using python to clean it up, create unique identifiers, and load it into a Redshift database.
+After the extraction, (1) a web scraper get additionnal information (e.g. birthday of the artist) (2) and transform the data using python to clean it up, create unique identifiers, and load it into an AWS Redshift database.
 
 The loading step uses (1) SQL to query the data (2) and python to automate a weekly email that gets sent to my email giving a summary of my Spotify listening for that week.
 
@@ -17,7 +17,7 @@ The Redshit DB is under: us-east-2
 
 ### Preview
 
-![preview](airflow_init.png)
+![preview](https://media0.giphy.com/media/JhyYyIZFLlgUnNSKuR/giphy.gif?cid=790b7611dcdadd5d0e2026921de9e779b68afc22c5dfd3d0&rid=giphy.gif&ct=g)
 
 # Resources
 
@@ -57,11 +57,11 @@ SECRET_IAM_AWS=AIM_AWS
 
   - python create_tables.py
 
-- Step 3: Upload api/data/db_etl.csv to S3 and to SQL Redshift
+- Step 3: Refer the section to run Apache Airflow
+
+- Step 4: Upload api/data/db_etl.csv to S3 and to SQL Redshift
 
   - python spotify_load_job.py
-
-- Step 4: Refer the section to run Apache Airflow
 
 - Step 5: Delete Redshift
 
@@ -93,6 +93,10 @@ SECRET_IAM_AWS=AIM_AWS
 
 > cd api && airflow webserver
 
+```
+Make sure you set load_example variable to "False" in airflow.cfg file.
+```
+
 Do not forget to either change the guest setting to public or create an admin user.
 
 ### AWS Redshift
@@ -123,6 +127,8 @@ Using Beautiful Soup, the python service is schedule to confirm the birthday dat
 - https://ruslanmv.com/blog/Create-Data-Warehouse-with-Redshift
 
 - https://hevodata.com/learn/load-csv-to-redshift-3-easy-methods/
+
+- https://www.astronomer.io/guides/managing-dependencies
 
 ```
 
