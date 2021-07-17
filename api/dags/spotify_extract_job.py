@@ -4,6 +4,8 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import pandas as pd
+import numpy as np
+
 import psycopg2
 from sqlalchemy import create_engine
 import sys
@@ -17,7 +19,10 @@ from dotenv import load_dotenv
 ## using existing module to specify location of the .env file
 from pathlib import Path
 import os
- 
+import requests
+from bs4 import BeautifulSoup
+import re
+
 logging.basicConfig(level=20, datefmt='%I:%M:%S', format='[%(asctime)s] %(message)s')
 
 
@@ -68,18 +73,43 @@ def spotify_etl_func():
         song_duration = song['track']['duration_ms']
         song_explicit = song['track']['explicit']
         song_popularity = song['track']['popularity']
-        song_time_played = song['played_at']
+        date_time_played = song['played_at']
         album_id = song['track']['album']['id']
-        artist_id = song['track']['album']['artists'][0]['id']
+        artist_id = song['track']['album']['artists'][0]['name']
+
+        # bs4 - Scraper
+        try:
+            r = requests.get('https://musicbrainz.org/search?query={}+{}&type=release&method=indexed'.format(artist_id, song_name).replace(' ', '+'))
+            soup = BeautifulSoup(r.content, 'lxml')
+            yearHTML = soup.find_all('span', 'release-date')[0] # Select first result
+
+            year = re.findall(r'[0-9]+', str(yearHTML))
+
+            scraper_year = year
+
+        except IndexError:
+            scraper_year = 'Year Not Found'
+
+        # Get genre
+        try:
+            w = requests.get('https://en.wikipedia.org/wiki/{}'.format(artist_id).replace(' ', '_'))
+            soupW = BeautifulSoup(w.content, 'lxml')
+
+            bdayHTML = soupW.find_all('span', class_='bday')
+
+            bday = re.findall(r'(\d{4})[-](\d{2})[-](\d{2})', str(bdayHTML))
+            scraper_bday = bday
+
+        except IndexError:
+            scraper_bday = bday.fillna(0, inplace=True)
 
         # Generate the row
         song_element = {'song_id':song_id,'song_name':song_name, 'img':song_img, 'duration_ms':song_duration,'song_explicit':song_explicit, 'url':song_url,
-                        'popularity':song_popularity,'date_time_played':song_time_played,'album_id':album_id,
-                        'artist_id':artist_id
+                        'popularity':song_popularity,'date_time_played':date_time_played,'album_id':album_id,
+                        'artist_id':artist_id, 'scrape1': scraper_year, 'scraper2': scraper_bday,
                        }
 
         song_list.append(song_element)
-
 
     # Converting to DataFrame
     song_df = pd.DataFrame.from_dict(song_list)
@@ -102,7 +132,7 @@ def spotify_etl_func():
     # Save in data folder
     song_df.to_csv("data/db_etl.csv")
     
-    return "Finished Extract, Transform, Load"
+    return "Finished Extract, Transform"
 
 if __name__ == '__main__':
     spotify_etl_func()
