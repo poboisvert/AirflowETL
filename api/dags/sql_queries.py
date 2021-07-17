@@ -18,7 +18,7 @@ load_dotenv(dotenv_path=env_path)
 
 # CONFIG
 config = configparser.ConfigParser()
-config.read('dwh.cfg')
+config.read('../dwh.cfg')
 
 # DROP TABLES
 
@@ -29,13 +29,6 @@ user_table_drop = "DROP TABLE IF EXISTS users"
 song_table_drop = "DROP TABLE IF EXISTS songs"
 artist_table_drop = "DROP TABLE IF EXISTS artists"
 time_table_drop = "DROP TABLE IF EXISTS time"
-
-
-
-ARN             = config.get('IAM_ROLE', 'ARN')
-LOG_DATA        = config.get('S3', 'LOG_DATA')
-LOG_JSONPATH    = config.get('S3', 'LOG_JSONPATH')
-SONG_DATA       = config.get('S3', 'SONG_DATA')
 
 # CREATE TABLES
 
@@ -63,13 +56,13 @@ staging_events_table_create= (
 staging_events_copy = (
     """
     COPY staging_events_table (id,song_id, song_name, img, duration_ms,song_explicit,url,popularity,date_time_played,album_id,artist_id, scraper1, scraper2)
-    FROM {}
+    FROM '{}'
     credentials 'aws_access_key_id={};aws_secret_access_key={}'
     csv
     IGNOREHEADER 1
     region 'us-east-1';
     """
-).format(config['S3']['log_data'], os.getenv("KEY_IAM_AWS"), os.getenv("SECRET_IAM_AWS"))
+).format(os.getenv("LOG_DATA"), os.getenv("KEY_IAM_AWS"), os.getenv("SECRET_IAM_AWS"))
 
 
 

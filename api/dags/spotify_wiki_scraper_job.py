@@ -1,14 +1,9 @@
-#!/bin/python
-import json
-import string
-import requests
-from bs4 import BeautifulSoup
-import re
-from datetime import datetime, timedelta
-import psycopg2
-
-import logging
 import configparser
+import psycopg2
+from sql_queries import copy_table_queries, insert_table_queries
+import logging
+import boto3
+from botocore.exceptions import ClientError
 
 ## importing the load_dotenv from the python-dotenv module
 from dotenv import load_dotenv
@@ -19,42 +14,56 @@ import os
  
 logging.basicConfig(level=20, datefmt='%I:%M:%S', format='[%(asctime)s] %(message)s')
 
-config = configparser.ConfigParser()
-config.read('../../dwh.cfg')
 
-def get_track_details(artist = "2Pac", track = "California Love"):
+load_dotenv()
+env_path = Path('.')/'.env'
+load_dotenv(dotenv_path=env_path)
 
-    # SQL Connection
-    config.read('dwh.cfg')
+# CONFIG
+def upload_file(path="data/db_etl.csv"):
+    session = boto3.resource(
+        's3',
+        region_name='us-east-1',
+        aws_access_key_id=os.getenv("KEY_IAM_AWS"),
+        aws_secret_access_key=os.getenv("SECRET_IAM_AWS")
+    )
+
+    session = boto3.session.Session()
+
+    s3 = session.resource('s3')
+    bucket = s3.Bucket('bhoodpreprod')
+
+    print("Bucket Online")
+
+    with open(path, 'rb') as data:
+                bucket.put_object(Key='data/db_etl.csv', Body=data)
+
+def load_staging_tables(cur, conn):
+    """
+    Description: load the datasets in S3 AWS into SQL tables  
+
+    Arguments:
+        cur: the cursor object. 
+        conn: the conection to the postgresSQL.
+    Returns:
+        None
+    """
+    for query in copy_table_queries:
+        cur.execute(query)
+        conn.commit()
+
+def load():
+    config = configparser.ConfigParser()
+    config.read('../dwh.cfg')
 
     conn = psycopg2.connect("host={} dbname={} user={} password={} port={}".format(*config['CLUSTER'].values()))
-    cur = conn.cursor()
+    cur = conn.cursor()    
 
-    today = datetime.today().date()
-    six_days_ago = today - timedelta(days=6)
-
-    #Top 5 Songs by Time Listened (MIN)
-    top_5_songs_min = []
-    cur.execute('SELECT TOP 5 * FROM staging_events_table')
-    for row in cur.fetchall():
-        song_name = row[2]
-        min_listened = row[4]
-        element = [song_name,min_listened]
-        top_5_songs_min.append(element)
-
-    #print(top_5_songs_min)
-    top_5_count = []
-    cur.execute('SELECT song_name, count(*) FROM staging_events_table GROUP BY song_name ORDER BY count DESC LIMIT 5')
-    for row in cur.fetchall():
-        song_name = row[0]
-        min_listened = row[1]
-        element = [song_name,min_listened]
-        top_5_count.append(element)
-
-    print(top_5_count)
+    # Log data into the table
+    upload_file()
+    load_staging_tables(cur, conn)
 
     conn.close()
 
-
-if __name__ == '__main__':
-    get_track_details()
+if __name__ == "__main__":
+    load()

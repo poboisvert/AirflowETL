@@ -3,7 +3,7 @@ from datetime import datetime
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from airflow.utils.dates import days_ago
-from spotify_wiki_scraper_job import get_track_details
+from spotify_wiki_scraper_job import load
 from airflow.utils.dates import days_ago
 
 my_args = {
@@ -21,13 +21,14 @@ my_dag = DAG(
     'spotify_wiki_dag',
     default_args = my_args,
     description= 'Spotify Wiki Information',
-    schedule_interval= '*/2 * * * *'
+    #schedule_interval= '*/2 * * * *'
+    schedule_interval='@once'
 )
 
 
 run_etl = PythonOperator(
     task_id='spotify_wiki',
-    python_callable=get_track_details,
+    python_callable=load,
     dag=my_dag
 )
 run_etl

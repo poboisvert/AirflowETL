@@ -85,10 +85,10 @@ def spotify_etl_func():
 
             year = re.findall(r'[0-9]+', str(yearHTML))
 
-            scraper_year = year
+            scraper_year = str(year)[1:-1].replace("'", "").replace(",", "-")
 
         except IndexError:
-            scraper_year = 'Year Not Found'
+            scraper_year = scraper_year.fillna(0, inplace=True)
 
         # Get genre
         try:
@@ -98,10 +98,10 @@ def spotify_etl_func():
             bdayHTML = soupW.find_all('span', class_='bday')
 
             bday = re.findall(r'(\d{4})[-](\d{2})[-](\d{2})', str(bdayHTML))
-            scraper_bday = bday
+            scraper_bday = str(bday)[1:-1].replace('(','').replace(')','').replace("'", "").replace(",", "-")
 
         except IndexError:
-            scraper_bday = bday.fillna(0, inplace=True)
+            scraper_bday = scraper_bday.fillna(0, inplace=True)
 
         # Generate the row
         song_element = {'song_id':song_id,'song_name':song_name, 'img':song_img, 'duration_ms':song_duration,'song_explicit':song_explicit, 'url':song_url,
@@ -130,6 +130,7 @@ def spotify_etl_func():
         raise Exception("Null values found")
 
     # Save in data folder
+    logging.info('Writing CSV file...')
     song_df.to_csv("data/db_etl.csv")
     
     return "Finished Extract, Transform"

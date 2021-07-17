@@ -12,6 +12,8 @@ After the extraction, (1) a web scraper get additionnal information (e.g. birthd
 
 The loading step uses (1) SQL to query the data (2) and python to automate a weekly email that gets sent to my email giving a summary of my Spotify listening for that week.
 
+![preview](email.png)
+
 ```
 The S3 bucket is under the region: us-west-2
 The Redshit DB is under: us-east-2
@@ -33,7 +35,7 @@ The Redshit DB is under: us-east-2
 
 - delete_cluster_redshift.py : delete redshift cluster and IAM role created and you will avoid an invoice.
 
-- dwh.cfg : contains configurations for AWS Redshift database and must be edited
+- dwh.cfg : contains configurations for AWS Redshift database and must be edited (To run in the folder api/dags, please use config.read('../../dwh.cfg') to be able to run it)
 
 - .env
 
@@ -47,6 +49,8 @@ CLIENT_SECRET=SPOTIFY_DEV
 
 KEY_IAM_AWS=AIM_AWS
 SECRET_IAM_AWS=AIM_AWS
+
+LOG_DATA='Please of the csv in S3' # Keep the ''
 ```
 
 #### Command
@@ -63,11 +67,14 @@ SECRET_IAM_AWS=AIM_AWS
 
 - Step 4: Upload api/data/db_etl.csv to S3 and to SQL Redshift
 
-  - python spotify_load_job.py
+  - python spotify_load_job.py (To run the loading process manually)
+
+  - If you run the file spotify_load_job.py in your terminal, the csv will in the folder api/data/db_etl.csv
+  - If you generate the file using Airflow, the csv will be inside the folder data/db_etl.csvdata/db_etl.csv
 
 - Step 5: Delete Redshift
 
-  - python delete_cluster_redshift.py
+  - python delete_cluster_redshift.py (Please do it in order to reduce your invoice)
 
 ### Data Pipeline Design
 
