@@ -23,6 +23,8 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
+from lyrics import MiniLyrics
+
 logging.basicConfig(level=20, datefmt='%I:%M:%S', format='[%(asctime)s] %(message)s')
 
 
@@ -58,10 +60,11 @@ def spotify_etl_func():
 
     # Print the DF - json format
     logging.info('Writing raw JSON file...')
-    with open("data/dump.json", 'w', encoding='utf-8') as f:
-            json.dump(data, f)
+    #with open("data/dump.json", 'w', encoding='utf-8') as f:
+          #  json.dump(data, f)
 
     # Reading the JSON and converting to dict
+    logging.info('Creating array songs...')
     # Based on https://github.com/karolina-sowinska/free-data-engineering-course-for-beginners/blob/master/dags/spotify_etl.py
     song_list = []
 
@@ -87,8 +90,11 @@ def spotify_etl_func():
 
             scraper_year = str(year)[1:-1].replace("'", "").replace(",", "-")
 
+            if not len(scraper_year):
+                scraper_bday = scraper_bday.fillna(0, inplace=True)
+                
         except IndexError:
-            scraper_year = scraper_year.fillna(0, inplace=True)
+            scraper_year = 0
 
         # Get genre
         try:
@@ -100,13 +106,24 @@ def spotify_etl_func():
             bday = re.findall(r'(\d{4})[-](\d{2})[-](\d{2})', str(bdayHTML))
             scraper_bday = str(bday)[1:-1].replace('(','').replace(')','').replace("'", "").replace(",", "-")
 
+            if not len(scraper_bday):
+                scraper_bday = 0
+
         except IndexError:
-            scraper_bday = scraper_bday.fillna(0, inplace=True)
+            scraper_bday = 0
+
+        # Find Lyrics
+        try:
+           lyrics = MiniLyrics(artist_id, song_name)
+
+        except IndexError:
+            lyrics = 0
+
 
         # Generate the row
         song_element = {'song_id':song_id,'song_name':song_name, 'img':song_img, 'duration_ms':song_duration,'song_explicit':song_explicit, 'url':song_url,
                         'popularity':song_popularity,'date_time_played':date_time_played,'album_id':album_id,
-                        'artist_id':artist_id, 'scrape1': scraper_year, 'scraper2': scraper_bday,
+                        'artist_id':artist_id, 'scrape1': scraper_year, 'scraper2': scraper_bday, 'lyrics': lyrics
                        }
 
         song_list.append(song_element)
@@ -126,8 +143,8 @@ def spotify_etl_func():
 
 
     # Check for nulls
-    if song_df.isnull().values.any():
-        raise Exception("Null values found")
+    #if song_df.isnull().values.any():
+    #    raise Exception("Null values found")
 
     # Save in data folder
     logging.info('Writing CSV file...')
