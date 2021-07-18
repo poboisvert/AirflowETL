@@ -43,6 +43,7 @@ def spotify_etl_func():
     spotify_client_id = CLIENT_ID
     spotify_client_secret = CLIENT_SECRET
     spotify_redirect_url = "http://localhost:8080"
+    spotify_req_limit = 5
     
     sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=spotify_client_id,
                                                    client_secret=spotify_client_secret,
@@ -50,7 +51,7 @@ def spotify_etl_func():
                                                    scope="user-read-recently-played")) # Here is what we cant to fetch from the API
     
     logging.info('Connected to Spotify...')
-    data = sp.current_user_recently_played(limit=5) # API limitation on requests
+    data = sp.current_user_recently_played(limit=spotify_req_limit) # API limitation on requests
 
     # Check if dataframe is empty
     if data is None:

@@ -86,8 +86,14 @@ def get_lyrics(song: str, artist: str) -> Optional[str]:
         lyrics_data = []
         for x in lyrics_path:
             lyrics_data.append(UnicodeDammit(re.sub("<.*?>", "", str(x).replace("<br/>", "\n"))).unicode_markup)
+        
 
         lyrics = "\n".join(unescape(lyrics_data))  # also convert escaped characters to symbols
+        
+    lyrics = str(lyrics)[0:-1].replace("[", "").replace("]", "")
+    # SQL import limitation - Redshift 
+    lyrics = lyrics[:250]
+
     return lyrics
 
 
