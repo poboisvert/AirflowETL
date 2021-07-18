@@ -22,8 +22,7 @@ import os
 import requests
 from bs4 import BeautifulSoup
 import re
-
-from lyrics import MiniLyrics
+from lyrics_queries import lyrics
 
 logging.basicConfig(level=20, datefmt='%I:%M:%S', format='[%(asctime)s] %(message)s')
 
@@ -51,7 +50,7 @@ def spotify_etl_func():
                                                    scope="user-read-recently-played")) # Here is what we cant to fetch from the API
     
     logging.info('Connected to Spotify...')
-    data = sp.current_user_recently_played(limit=50) # API limitation on requests
+    data = sp.current_user_recently_played(limit=5) # API limitation on requests
 
     # Check if dataframe is empty
     if data is None:
@@ -114,16 +113,16 @@ def spotify_etl_func():
 
         # Find Lyrics
         try:
-           lyrics = MiniLyrics(artist_id, song_name)
+           lyrics_song = lyrics(song_name, artist_id)
 
         except IndexError:
-            lyrics = 0
+            lyrics_song = 0
 
 
         # Generate the row
         song_element = {'song_id':song_id,'song_name':song_name, 'img':song_img, 'duration_ms':song_duration,'song_explicit':song_explicit, 'url':song_url,
                         'popularity':song_popularity,'date_time_played':date_time_played,'album_id':album_id,
-                        'artist_id':artist_id, 'scrape1': scraper_year, 'scraper2': scraper_bday, 'lyrics': lyrics
+                        'artist_id':artist_id, 'scrape1': scraper_year, 'scraper2': scraper_bday, 'lyrics_song': lyrics_song
                        }
 
         song_list.append(song_element)
