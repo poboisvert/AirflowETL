@@ -54,7 +54,8 @@ staging_events_table_create= (
       album_id VARCHAR(500),
       artist_id VARCHAR(500),
       scraper1 VARCHAR(500),
-      scraper2 VARCHAR(500)
+      scraper2 VARCHAR(500),
+      lyrics_song VARCHAR(500)
     )
    """
 )
@@ -62,7 +63,7 @@ staging_events_table_create= (
 # STAGING TABLES
 staging_events_copy = (
     """
-    COPY staging_events_table (id,song_id, song_name, img, duration_ms,song_explicit,url,popularity,date_time_played,album_id,artist_id, scraper1, scraper2)
+    COPY staging_events_table (id,song_id, song_name, img, duration_ms,song_explicit,url,popularity,date_time_played,album_id,artist_id, scraper1, scraper2, lyrics_song)
     FROM {}
     credentials 'aws_access_key_id={};aws_secret_access_key={}'
     csv
