@@ -1,52 +1,6 @@
-,song_id,song_name,img,duration_ms,song_explicit,url,popularity,date_time_played,album_id,artist_id,scrape1,scraper2,lyrics_song
-0,4WZb6UurjjVs2W6ClgwirI,Hell Broke Luce,https://i.scdn.co/image/ab67616d0000b273343cdcc47cfcbc43a4c66ae5,236066,False,https://open.spotify.com/track/4WZb6UurjjVs2W6ClgwirI,45,2021-07-18 20:18:02.985000+00:00,5kngzyNwERbKiQDvVwsgMt,Tom Waits,2002,1949- 12- 07,"Verse 1
-I had a good home but I left
-I had a good home but I left, right, left
-That big fucking bomb made me deaf, deaf
-A Humvee mechanic put his Kevlar on wrong
-I guarantee you’ll meet up with a suicide bomb
-And Hell broke luce
-Hell broke luce
-
-Vers"
-1,3OXX5hy8YPQP9QYgzqaY2f,Hit the City,https://i.scdn.co/image/ab67616d0000b27305f3f40cb1ae63c65128aff4,168533,False,https://open.spotify.com/track/3OXX5hy8YPQP9QYgzqaY2f,42,2021-07-18 20:14:06.554000+00:00,4tK7Hlb92sbC6OEKQG7QiJ,Mark Lanegan,2004,1964- 11- 25,"The dark descends through the promised land
-Down kingdom come and the acid ban
-I'm bad alone, burned inside out
-Nothing to kill it
-I hit the city
-
-In Marianne, I dug a hole
-And watched her trip on my heart of stone
-And in the end all that crawled was"
-2,6u0EHlRPgUIfER7ZAE4x6Q,30 Century Man,https://i.scdn.co/image/ab67616d0000b2737489de56991922c1b3d71703,86333,False,https://open.spotify.com/track/6u0EHlRPgUIfER7ZAE4x6Q,45,2021-07-18 20:00:30.858000+00:00,5ofQcOqaopFUp7VO5UYzpI,Scott Walker,2009- 05- 05,0,"Verse 1
-See the dwarves and see the giants
-Which one would you choose to be?
-And if you can't get that together
-Here's the answer, here's the key
-
-Chorus
-You can freeze like a 30 century man
-Like a 30 century man
-
-Verse 2
-I'll save my bread and take "
-3,2fkJwO4xeYkGy0x3VXK70k,I Don't Wanna Grow Up,https://i.scdn.co/image/ab67616d0000b27386fc23b8ae19c2455ae00e82,151573,False,https://open.spotify.com/track/2fkJwO4xeYkGy0x3VXK70k,42,2021-07-18 19:59:04.310000+00:00,5blxyZRgkA735vO40p56MA,Tom Waits,2017- 04- 21,1949- 12- 07,"When I'm lyin' in my bed at night
-I don't wanna grow up
-Nothin' ever seems to turn out right
-I don't wanna grow up
-How do you move in a world of fog
-That's always changing things
-Makes me wish that I could be a dog
-
-When I see the price that you pay
-"
-4,2uXkW8uJcOIhlbUatEPLPs,Have Love Will Travel,https://i.scdn.co/image/ab67616d0000b2733b8f9c148e9eead1143c78e6,160400,False,https://open.spotify.com/track/2uXkW8uJcOIhlbUatEPLPs,57,2021-07-18 19:52:27.719000+00:00,4vqaqoTEbNyeeSHJA6KpdM,The Sonics,2010,0,"Wow, Have love
-Whoa baby will travel
-Uh huh, uh huh, have love
-Woah baby will travel
-I said if you need loving then
-Mm, hmm, I'll travel
-
-Yeah, I'll travel from Maine to Mexico
-Just to find a little girl that loves me so
-No matter when, no matter whe"
+,song_id,song_name,img,duration_ms,song_explicit,url,popularity,date_time_played,album_id,artist_id,scrape1,scraper2
+0,1GkZZHT9uJjdzrrksrpczR,Hallogallo,https://i.scdn.co/image/ab67616d0000b27375856e9d5b9e5b10dd258c8c,607426,False,https://open.spotify.com/track/1GkZZHT9uJjdzrrksrpczR,35,2021-07-18 23:28:08.057000+00:00,77JnRHSaaS8D6JZQ4EIKu8,NEU!,1973,2010- 08- 16- 1995- 10- 17- 2010- 05- 10
+1,3oXnTeP6me5QMkbVT7Lv19,Los Angeles,https://i.scdn.co/image/ab67616d0000b2736c81e8c551bdd972e35e6d35,249000,False,https://open.spotify.com/track/3oXnTeP6me5QMkbVT7Lv19,41,2021-07-18 23:18:50.120000+00:00,1q3ECdv7SORlFJj0OjjBuT,Frank Black,1993,1965- 04- 06
+2,6TQ4DgGhK4if6DNVpyi8V4,Rumble,https://i.scdn.co/image/ab67616d0000b273a5604df5f7ee9e2d544ce82e,145920,False,https://open.spotify.com/track/6TQ4DgGhK4if6DNVpyi8V4,55,2021-07-18 23:09:13.397000+00:00,63iLkehxYs1QWMAloQq1nt,Link Wray,1974,1929- 05- 02
+3,4WZb6UurjjVs2W6ClgwirI,Hell Broke Luce,https://i.scdn.co/image/ab67616d0000b273343cdcc47cfcbc43a4c66ae5,236066,False,https://open.spotify.com/track/4WZb6UurjjVs2W6ClgwirI,45,2021-07-18 20:18:02.985000+00:00,5kngzyNwERbKiQDvVwsgMt,Tom Waits,2002,1949- 12- 07
+4,3OXX5hy8YPQP9QYgzqaY2f,Hit the City,https://i.scdn.co/image/ab67616d0000b27305f3f40cb1ae63c65128aff4,168533,False,https://open.spotify.com/track/3OXX5hy8YPQP9QYgzqaY2f,42,2021-07-18 20:14:06.554000+00:00,4tK7Hlb92sbC6OEKQG7QiJ,Mark Lanegan,2004,1964- 11- 25

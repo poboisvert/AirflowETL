@@ -20,7 +20,7 @@ env_path = Path('.')/'.env'
 load_dotenv(dotenv_path=env_path)
 
 # CONFIG
-def upload_file(path="data/db_etl.csv"):
+def upload_file(path):
     session = boto3.resource(
         's3',
         region_name='us-east-1',
@@ -36,7 +36,7 @@ def upload_file(path="data/db_etl.csv"):
     print("Bucket Online")
 
     with open(path, 'rb') as data:
-                bucket.put_object(Key='data/db_etl.csv', Body=data)
+                bucket.put_object(Key=path, Body=data)
 
 def load_staging_tables(cur, conn):
     """
@@ -60,7 +60,8 @@ def load():
     cur = conn.cursor()    
 
     # Log data into the table
-    upload_file()
+    upload_file("data/db_etl.csv")
+    upload_file("data/lyrics_etl.csv")
     load_staging_tables(cur, conn)
 
     conn.close()

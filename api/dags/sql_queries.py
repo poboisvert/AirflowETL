@@ -35,20 +35,19 @@ time_table_drop = "DROP TABLE IF EXISTS time"
 staging_events_table_create= (
    """
    CREATE TABLE staging_events_table (
-      id VARCHAR(255) PRIMARY KEY,
-      song_id VARCHAR(255),
-      song_name VARCHAR(255),
-      img VARCHAR(255),
-      duration_ms VARCHAR(255),
-      song_explicit VARCHAR(255),
-      url VARCHAR(255),
-      popularity VARCHAR(255),
-      date_time_played VARCHAR(255),
-      album_id VARCHAR(255),
-      artist_id VARCHAR(255),
-      scraper1 VARCHAR(255),
-      scraper2 VARCHAR(255),
-      lyrics_song VARCHAR(255)
+      id VARCHAR(500) PRIMARY KEY,
+      song_id VARCHAR(500),
+      song_name VARCHAR(500),
+      img VARCHAR(500),
+      duration_ms VARCHAR(500),
+      song_explicit VARCHAR(500),
+      url VARCHAR(500),
+      popularity VARCHAR(500),
+      date_time_played VARCHAR(500),
+      album_id VARCHAR(500),
+      artist_id VARCHAR(500),
+      scraper1 VARCHAR(500),
+      scraper2 VARCHAR(500)
     )
    """
 )
@@ -56,7 +55,7 @@ staging_events_table_create= (
 # STAGING TABLES
 staging_events_copy = (
     """
-    COPY staging_events_table (id,song_id, song_name, img, duration_ms,song_explicit,url,popularity,date_time_played,album_id,artist_id, scraper1, scraper2, lyrics_song)
+    COPY staging_events_table (id,song_id, song_name, img, duration_ms,song_explicit,url,popularity,date_time_played,album_id,artist_id, scraper1, scraper2)
     FROM '{}'
     credentials 'aws_access_key_id={};aws_secret_access_key={}'
     csv
