@@ -92,7 +92,7 @@ def get_lyrics(song: str, artist: str) -> Optional[str]:
         
     lyrics = str(lyrics)[0:-1].replace("[", "").replace("]", "")
     # SQL import limitation - Redshift 
-    lyrics = lyrics[:250]
+    #lyrics = lyrics[:250]
 
     return lyrics
 
