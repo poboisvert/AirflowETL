@@ -22,6 +22,7 @@ import os
 import requests
 from bs4 import BeautifulSoup
 import re
+
 from lyrics_queries import lyrics
 
 logging.basicConfig(level=20, datefmt='%I:%M:%S', format='[%(asctime)s] %(message)s')
@@ -44,7 +45,7 @@ def spotify_etl_func():
     spotify_client_secret = CLIENT_SECRET
     spotify_redirect_url = "http://localhost:8080"
     spotify_req_limit = 5
-    
+
     sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=spotify_client_id,
                                                    client_secret=spotify_client_secret,
                                                    redirect_uri=spotify_redirect_url,
@@ -60,13 +61,13 @@ def spotify_etl_func():
 
     # Print the DF - json format
     logging.info('Writing raw JSON file...')
-    #with open("data/dump.json", 'w', encoding='utf-8') as f:
-          #  json.dump(data, f)
+    with open("data/dump.json", 'w', encoding='utf-8') as f:
+            json.dump(data, f)
 
     # Reading the JSON and converting to dict
-    logging.info('Creating array songs...')
     # Based on https://github.com/karolina-sowinska/free-data-engineering-course-for-beginners/blob/master/dags/spotify_etl.py
     song_list = []
+    lyrics_list = []
 
     for song in data['items']:
         song_id = song['track']['id']
@@ -119,18 +120,20 @@ def spotify_etl_func():
         except IndexError:
             lyrics_song = 0
 
-
         # Generate the row
         song_element = {'song_id':song_id,'song_name':song_name, 'img':song_img, 'duration_ms':song_duration,'song_explicit':song_explicit, 'url':song_url,
                         'popularity':song_popularity,'date_time_played':date_time_played,'album_id':album_id,
-                        'artist_id':artist_id, 'scrape1': scraper_year, 'scraper2': scraper_bday, 'lyrics_song': lyrics_song
+                        'artist_id':artist_id, 'scrape1': scraper_year, 'scraper2': scraper_bday
                        }
 
         song_list.append(song_element)
 
+        lyrics_element = {'song_id':song_id,'song_name':song_name, 'date_time_played':date_time_played, "lyrics": lyrics_song}
+        lyrics_list.append(lyrics_element)
+
     # Converting to DataFrame
     song_df = pd.DataFrame.from_dict(song_list)
-    #print(song_df)
+    lyrics_df = pd.DataFrame.from_dict(lyrics_list)
 
     # Primary Key Check
     if pd.Series(song_df['date_time_played']).is_unique:
@@ -143,12 +146,13 @@ def spotify_etl_func():
 
 
     # Check for nulls
-    #if song_df.isnull().values.any():
-    #    raise Exception("Null values found")
+    if song_df.isnull().values.any():
+        raise Exception("Null values found")
 
     # Save in data folder
     logging.info('Writing CSV file...')
     song_df.to_csv("data/db_etl.csv")
+    lyrics_df.to_csv("data/lyrics_etl.csv")
     
     return "Finished Extract, Transform"
 

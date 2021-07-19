@@ -39,13 +39,13 @@ def spotify_weekly_email_function():
 
     subject = 'Test subject'
     message = 'This is the message'
-    destination = 'receiver@gmail.com'
+    destination = 'pob944@gmail.com'
 
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
 
     #This is where you would replace your password with the app password - it's your gmail account (the sender account)
-    server.login('sender@gmail.com', 'password_gmail)')
+    server.login('pob944@gmail.com', 'Rockmyroot0)')
 
     msg = EmailMessage()
 
