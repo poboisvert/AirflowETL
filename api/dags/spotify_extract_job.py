@@ -44,7 +44,7 @@ def spotify_etl_func():
     spotify_client_id = CLIENT_ID
     spotify_client_secret = CLIENT_SECRET
     spotify_redirect_url = "http://localhost:8080"
-    spotify_req_limit = 5
+    spotify_req_limit = 25
 
     sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=spotify_client_id,
                                                    client_secret=spotify_client_secret,
