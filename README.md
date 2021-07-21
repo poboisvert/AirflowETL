@@ -141,6 +141,8 @@ Using Beautiful Soup, the python service is schedule to confirm the birthday dat
 
 - https://www.applydatascience.com/airflow/writing-your-first-pipeline/
 
+- https://github.com/SwagLyrics/SwagLyrics-For-Spotify/blob/master/swaglyrics/cli.py (Lyrics Module)
+
 ```
 
 ```
