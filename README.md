@@ -63,7 +63,7 @@ LOG_DATA='Please of the csv in S3' # Keep the ''
 
   - python create_tables.py
 
-- Step 3: Refer the section to run Apache Airflow
+- Step 3: Refer the section to run Apache Airflow & User https://airflow.apache.org/docs/apache-airflow/stable/security/webserver.html
 
 - Step 4: Upload api/data/db_etl.csv to S3 and to SQL Redshift
 
@@ -98,9 +98,11 @@ LOG_DATA='Please of the csv in S3' # Keep the ''
 
 > airflow db init
 
-> cd api && airflow scheduler
+> cd api && airflow scheduler | DO NOT FORGET cd api && export AIRFLOW_HOME=$PWD
 
-> cd api && airflow webserver
+> cd api && airflow webserver | DO NOT FORGET cd api && export AIRFLOW_HOME=$PWD
+
+Do not forget to validate the command: python spotify_load_job.py
 
 ```
 Make sure you set load_example variable to "False" in airflow.cfg file.
