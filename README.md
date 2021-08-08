@@ -76,6 +76,8 @@ LOG_DATA='Please of the csv in S3' # Keep the ''
 
   - python delete_cluster_redshift.py (Please do it in order to reduce your invoice)
 
+- Step 6: Staging database ready for analysis in Jupyer
+
 ### Data Pipeline Design
 
 - The ETL pipeline uses Python (pandas), that simplifies data manipulation and the exportation to a csv and boto3 also allows connection to Redshift Database.
