@@ -17,7 +17,7 @@ The loading step uses (1) SQL to query the data (2) and python to automate a wee
 ![preview](email.png)
 
 ```
-The S3 bucket is under the region: us-west-2
+The S3 bucket is under the region: us-east-1
 The Redshit DB is under: us-east-2
 ```
 
@@ -46,15 +46,23 @@ The Redshit DB is under: us-east-2
 ```
 # Development settings
 
-CLIENT_ID=SPOTIFY_DEV
-CLIENT_SECRET=SPOTIFY_DEV
+CLIENT_ID=SPOTIFYIDKEY
+CLIENT_SECRET=SPOTIFYPRIVATE
+spotify_req_limit=5
 
 # AWS
 
-KEY_IAM_AWS=AIM_AWS
-SECRET_IAM_AWS=AIM_AWS
+KEY_IAM_AWS=AWSUSER
+SECRET_IAM_AWS=AWSPASS
+LOG_DATA='s3://EXAMPLE/data/db_etl.csv'
+# Keep the ''
 
-LOG_DATA='Please of the csv in S3' # Keep the ''
+# S3
+BUCKET_NAME=bhoodpreprod
+
+# Email
+GMAILEMAILFROM=USERTOCHANGE@gmail.com
+GMAILPASS=GMAIL_PASS
 ```
 
 ### Data Pipeline Design
@@ -100,9 +108,9 @@ LOG_DATA='Please of the csv in S3' # Keep the ''
 
 > airflow db init
 
-> cd api && airflow scheduler | TO RUN DO NOT FORGET cd api && export AIRFLOW_HOME=$PWD
+> cd api && sudo airflow scheduler | TO RUN DO NOT FORGET cd api && export AIRFLOW_HOME=$PWD
 
-> cd api && airflow webserver | TO RUN DO NOT FORGET cd api && export AIRFLOW_HOME=$PWD
+> cd api && sudo airflow webserver | TO RUN DO NOT FORGET cd api && export AIRFLOW_HOME=$PWD
 
 Do not forget to validate the command: python spotify_load_job.py
 
