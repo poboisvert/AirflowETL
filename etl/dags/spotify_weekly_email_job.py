@@ -8,22 +8,27 @@ import configparser
 from dotenv import load_dotenv
 from pathlib import Path
 import os
+from airflow.models import Variable
+from utils.logger import logger
 
-load_dotenv()
-env_path = Path(".") / ".env"
-load_dotenv(dotenv_path=env_path)
+# load_dotenv()
+# env_path = Path(".") / ".env"
+# load_dotenv(dotenv_path=env_path)
 
-GMAILEMAILFROM = os.getenv("GMAILEMAILFROM")
-GMAILPASS = os.getenv("GMAILPASS")
+# GMAILEMAILFROM = os.getenv("GMAILEMAILFROM")
+# GMAILPASS = os.getenv("GMAILPASS")
+
+GMAILEMAILFROM = Variable.get("GMAILEMAILFROM")
+GMAILPASS = Variable.get("GMAILPASS")
 
 
 def spotify_weekly_email_function():
-    config = configparser.ConfigParser()
-    config.read("../dwh.cfg")
+    #config = configparser.ConfigParser()
+    #config.read("../dwh.cfg")
 
     conn = psycopg2.connect(
         "host={} dbname={} user={} password={} port={}".format(
-            *config["CLUSTER"].values()
+            Variable.get("HOST"), Variable.get("DB_NAME"),Variable.get("DB_USER"),Variable.get("DB_PASSWORD"),Variable.get("DB_PORT")
         )
     )
     cur = conn.cursor()

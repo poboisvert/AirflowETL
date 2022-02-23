@@ -3,27 +3,16 @@ import boto3
 import json
 
 import logging
-
-## importing the load_dotenv from the python-dotenv module
-from dotenv import load_dotenv
- 
-## using existing module to specify location of the .env file
-from pathlib import Path
-import os
  
 logging.basicConfig(level=20, datefmt='%I:%M:%S', format='[%(asctime)s] %(message)s')
 
-
-load_dotenv()
-env_path = Path('.')/'.env'
-load_dotenv(dotenv_path=env_path)
 
 import configparser
 config = configparser.ConfigParser()
 config.read_file(open('dwh.cfg'))
 
-KEY                    = os.getenv("KEY_IAM_AWS")
-SECRET                 = os.getenv("SECRET_IAM_AWS")
+KEY                    = config.get("AWS", "KEY_IAM_AWS")
+SECRET                 = config.get("AWS", "SECRET_IAM_AWS")
 
 DWH_CLUSTER_TYPE       = config.get("DWH","DWH_CLUSTER_TYPE")
 DWH_NUM_NODES          = config.get("DWH","DWH_NUM_NODES")

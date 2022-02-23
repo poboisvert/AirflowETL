@@ -9,20 +9,21 @@ from dotenv import load_dotenv
 from pathlib import Path
 import os
 
+from airflow.models import Variable
+
+
 logging.basicConfig(level=20, datefmt="%I:%M:%S", format="[%(asctime)s] %(message)s")
 
-load_dotenv()
-env_path = Path(".") / ".env"
-load_dotenv(dotenv_path=env_path)
-BUCKET_NAME = os.getenv("BUCKET_NAME")
+#BUCKET_NAME = os.getenv("BUCKET_NAME")
+BUCKET_NAME = Variable.get("BUCKET_NAME")
 
 # CONFIG
 def upload_file(path):
     session = boto3.resource(
         "s3",
         region_name="us-east-1",
-        aws_access_key_id=os.getenv("KEY_IAM_AWS"),
-        aws_secret_access_key=os.getenv("SECRET_IAM_AWS"),
+        aws_access_key_id=Variable.get("KEY_IAM_AWS"),
+        aws_secret_access_key=Variable.get("SECRET_IAM_AWS"),
     )
 
     session = boto3.session.Session()
@@ -50,12 +51,9 @@ def load_staging_tables(cur, conn):
 
 
 def load():
-    config = configparser.ConfigParser()
-    config.read("../dwh.cfg")
-
     conn = psycopg2.connect(
         "host={} dbname={} user={} password={} port={}".format(
-            *config["CLUSTER"].values()
+            Variable.get("HOST"), Variable.get("DB_NAME"),Variable.get("DB_USER"),Variable.get("DB_PASSWORD"),Variable.get("DB_PORT")
         )
     )
     cur = conn.cursor()

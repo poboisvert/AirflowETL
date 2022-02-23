@@ -1,22 +1,10 @@
 import pandas as pd
 import boto3
 import json
-
+import os
 import logging
 
-## importing the load_dotenv from the python-dotenv module
-from dotenv import load_dotenv
- 
-## using existing module to specify location of the .env file
-from pathlib import Path
-import os
- 
 logging.basicConfig(level=20, datefmt='%I:%M:%S', format='[%(asctime)s] %(message)s')
-
-
-load_dotenv()
-env_path = Path('.')/'.env'
-load_dotenv(dotenv_path=env_path)
 
 import configparser
 config = configparser.ConfigParser()
@@ -30,8 +18,8 @@ def main():
     Returns:
         None
     """
-    KEY                    = os.getenv("KEY_IAM_AWS")
-    SECRET                 = os.getenv("SECRET_IAM_AWS")
+    KEY                    = config.get("AWS", "KEY_IAM_AWS")
+    SECRET                 = config.get("AWS", "SECRET_IAM_AWS")
     DWH_CLUSTER_IDENTIFIER = config.get("DWH","DWH_CLUSTER_IDENTIFIER")
     DWH_IAM_ROLE_NAME      = config.get("DWH", "DWH_IAM_ROLE_NAME")
 
