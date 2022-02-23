@@ -37,34 +37,6 @@ The Redshit DB is under: us-east-2
 
 - delete_cluster_redshift.py : delete redshift cluster and IAM role created and you will avoid an invoice.
 
-#### To run this project in local mode, create a file "dwh.cfg" and ".env" in the root of this project with the following data:
-
-- dwh.cfg : contains configurations for AWS Redshift database and must be edited (To run in the folder api/dags, please use config.read('../../dwh.cfg') to be able to run it)
-
-- Below is for ".env"
-
-```
-# Development settings
-
-CLIENT_ID=SPOTIFYIDKEY
-CLIENT_SECRET=SPOTIFYPRIVATE
-spotify_req_limit=5
-
-# AWS
-
-KEY_IAM_AWS=AWSUSER
-SECRET_IAM_AWS=AWSPASS
-LOG_DATA='s3://EXAMPLE/data/db_etl.csv'
-# Keep the ''
-
-# S3
-BUCKET_NAME=bhoodpreprod
-
-# Email
-GMAILEMAILFROM=USERTOCHANGE@gmail.com
-GMAILPASS=GMAIL_PASS
-```
-
 ### Data Pipeline Design
 
 - The ETL pipeline uses Python (pandas), that simplifies data manipulation and the exportation to a csv and boto3 also allows connection to Redshift Database. At this moment, the data are store as a staging stage with the structure below:
@@ -113,6 +85,8 @@ NOTE: Make sure you set load_example variable to "False" in airflow.cfg file.
 - Do not forget to either change the guest setting to public OR create an admin user.
 
 ## init_aws
+
+- To run this project in local mode, create a file "dwh.cfg"
 
 #### IAM Access
 
