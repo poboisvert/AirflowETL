@@ -1,16 +1,8 @@
-# This is the Python file to extract the songs from Spotify, transform the data and then load it into PostgreSQL.
-# It is placed into a function for my Airflow DAG to call
-
-import spotipy
-from spotipy.oauth2 import SpotifyOAuth
 import pandas as pd
 import numpy as np
 
 import json
 import logging
-
-## importing the load_dotenv from the python-dotenv module
-from dotenv import load_dotenv
 
 ## using existing module to specify location of the .env file
 from pathlib import Path
@@ -19,57 +11,37 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
-from lyrics_queries import lyrics
+from spotify.lyrics_queries import lyrics
+from spotify.api import credentials
+from utils.logger import logger
+from airflow.models import Variable
 
-logging.basicConfig(level=20, datefmt="%I:%M:%S", format="[%(asctime)s] %(message)s")
+# load_dotenv()
+# env_path = Path(".") / ".env"
+# load_dotenv(dotenv_path=env_path)
 
-
-load_dotenv()
-env_path = Path(".") / ".env"
-load_dotenv(dotenv_path=env_path)
-
-
-# retrieving keys and adding them to the project
-# from the .env file through their key names
-CLIENT_ID = os.getenv("CLIENT_ID")
-CLIENT_SECRET = os.getenv("CLIENT_SECRET")
-LIMIT = os.getenv("spotify_req_limit")
+CLIENT_ID = Variable.get("CLIENT_ID")
+CLIENT_SECRET = Variable.get("CLIENT_SECRET")
+LIMIT = Variable.get("spotify_req_limit")
 
 
 def spotify_etl_func():
 
-    # Setup the Developer ENV from Spotify Website
-    spotify_client_id = CLIENT_ID
-    spotify_client_secret = CLIENT_SECRET
-    spotify_redirect_url = "http://localhost:8080"
-    spotify_req_limit = LIMIT
+    sp = credentials(CLIENT_ID, CLIENT_SECRET, LIMIT)
 
-    sp = spotipy.Spotify(
-        auth_manager=SpotifyOAuth(
-            client_id=spotify_client_id,
-            client_secret=spotify_client_secret,
-            redirect_uri=spotify_redirect_url,
-            scope="user-read-recently-played",
-        )
-    )  # Here is what we cant to fetch from the API
-
-    logging.info("Connected to Spotify...")
+    logger.info("Connected to Spotify...")
     data = sp.current_user_recently_played(
-        limit=spotify_req_limit
-    )  # API limitation on requests
+        limit=10
+    )  
 
-    # Check if dataframe is empty
     if data is None:
-        logging.info("No songs downloaded. Finishing execution")
+        logger.info("No songs downloaded. Finishing execution")
         return False
 
-    # Print the DF - json format dump
-    logging.info("Writing raw JSON file...")
+    logger.info("Writing raw JSON file...")
     with open("data/dump.json", "w", encoding="utf-8") as f:
         json.dump(data, f)
 
-    # Reading the JSON and converting to dict
-    # Based on https://github.com/karolina-sowinska/free-data-engineering-course-for-beginners/blob/master/dags/spotify_etl.py
     song_list = []
     lyrics_list = []
 
@@ -180,11 +152,11 @@ def spotify_etl_func():
         raise Exception("Null values found")
 
     # Save in data folder
-    logging.info("Writing CSV file...")
+    logger.info("Writing CSV file...")
     song_df.to_csv("data/db_etl.csv")
     lyrics_df.to_csv("data/lyrics_etl.csv")
 
-    return " Done - Extract, Transform"
+    return
 
 
 if __name__ == "__main__":

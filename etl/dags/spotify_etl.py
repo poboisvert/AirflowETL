@@ -3,7 +3,7 @@ from airflow.operators.python_operator import PythonOperator
 from datetime import datetime, timedelta
 
 from spotify_extract_job import spotify_etl_func
-from spotify_wiki_scraper_job import load
+from spotify_db_job import load
 from spotify_weekly_email_job import spotify_weekly_email_function
 
 from datetime import timedelta, datetime
@@ -32,11 +32,11 @@ t1 = PythonOperator(
 )
 
 t2 = PythonOperator(
-    task_id="load_redshift_db", python_callable=load, retries=3, dag=dag
+    task_id="load_db", python_callable=load, dag=dag
 )
 
 t3 = PythonOperator(
-    task_id="emails_sender",
+    task_id="emails",
     python_callable=spotify_weekly_email_function,
     dag=dag,
 )

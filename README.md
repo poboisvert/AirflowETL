@@ -104,14 +104,6 @@ GMAILPASS=GMAIL_PASS
 
 > pip install -r requirements.txt
 
-## Airflow Installation
-
-> airflow db init
-
-> cd api && sudo airflow scheduler | TO RUN DO NOT FORGET cd api && export AIRFLOW_HOME=$PWD
-
-> cd api && sudo airflow webserver | TO RUN DO NOT FORGET cd api && export AIRFLOW_HOME=$PWD
-
 Do not forget to validate the command: python spotify_load_job.py
 
 ```
@@ -120,7 +112,15 @@ NOTE: Make sure you set load_example variable to "False" in airflow.cfg file.
 
 - Do not forget to either change the guest setting to public OR create an admin user.
 
-#### Running the project
+## init_aws
+
+#### IAM Access
+
+- IAM user in our AWS account Give it "AdministratorAccess"
+
+#### Steps
+
+All files used to create load and delete he redshift
 
 - Step 1: Create Redshift
 
@@ -130,20 +130,23 @@ NOTE: Make sure you set load_example variable to "False" in airflow.cfg file.
 
   - python create_tables.py
 
-- Step 3: Refer the section to run Apache Airflow & User https://airflow.apache.org/docs/apache-airflow/stable/security/webserver.html
-
-- Step 4: Upload api/data/db_etl.csv to S3 and to SQL Redshift
-
-  - python spotify_load_job.py (To run the loading process manually)
-
-  - If you run the file spotify_load_job.py in your terminal, the csv will in the folder api/data/db_etl.csv
-  - If you generate the file using Airflow, the csv will be inside the folder data/db_etl.csvdata/db_etl.csv
-
-- Step 5: Delete Redshift
+- Step 5: Delete Redshift (When done with the project)
 
   - python delete_cluster_redshift.py (Please do it in order to reduce your invoice)
 
-- Step 6: Staging database ready for analysis in Jupyer
+## etl/init
+
+### Init variables
+
+> airflow variables import init/variables.json
+
+## Airflow Installation
+
+> airflow db init
+
+> cd api && airflow scheduler | TO RUN DO NOT FORGET cd etl && export AIRFLOW_HOME=$PWD and PYTHONPATH
+
+> cd api && airflow webserver | TO RUN DO NOT FORGET cd etl && export AIRFLOW_HOME=$PWD and PYTHONPATH
 
 ### AWS Redshift
 
@@ -156,10 +159,6 @@ Redshift is a fully managed, cloud-based, petabyte-scale data warehouse service 
 > Select Redshift from the Type dropdown menu
 
 > You now have 2 new Redshift rules (0.0.0.0/0 AND ::/0)
-
-#### IAM Access
-
-- IAM user in our AWS account Give it "AdministratorAccess"
 
 ## Web Scraper
 
@@ -179,7 +178,3 @@ Using Beautiful Soup, the python service is schedule to confirm the birthday dat
 - https://www.applydatascience.com/airflow/writing-your-first-pipeline/
 
 - https://github.com/SwagLyrics/SwagLyrics-For-Spotify/blob/master/swaglyrics/cli.py (Lyrics Module)
-
-```
-
-```
