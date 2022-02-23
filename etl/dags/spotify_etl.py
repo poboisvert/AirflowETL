@@ -2,9 +2,9 @@ from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from datetime import datetime, timedelta
 
-from spotify_extract_job import spotify_etl_func
-from spotify_db_job import load
-from spotify_weekly_email_job import spotify_weekly_email_function
+from scripts.spotify_extract_job import spotify_etl_func
+from scripts.spotify_db_job import load
+from scripts.spotify_weekly_email_job import spotify_weekly_email_function
 
 from datetime import timedelta, datetime
 import os

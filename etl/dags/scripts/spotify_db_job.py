@@ -1,16 +1,14 @@
 import configparser
 import psycopg2
-from sql_queries import copy_table_queries
+from scripts.sql_queries import copy_table_queries
 import logging
 import boto3
-from botocore.exceptions import ClientError
-from dotenv import load_dotenv
-
-from pathlib import Path
-import os
-
+from utils.logger import logger
 from airflow.models import Variable
 
+# from dotenv import load_dotenv
+# from pathlib import Path
+# import os
 
 logging.basicConfig(level=20, datefmt="%I:%M:%S", format="[%(asctime)s] %(message)s")
 
@@ -27,11 +25,10 @@ def upload_file(path):
     )
 
     session = boto3.session.Session()
-
     s3 = session.resource("s3")
     bucket = s3.Bucket(BUCKET_NAME)
 
-    print("Bucket Online")
+    logger.info("Bucket Online")
 
     with open(path, "rb") as data:
         bucket.put_object(Key=path, Body=data)
@@ -45,23 +42,28 @@ def load_staging_tables(cur, conn):
     Returns:
         None
     """
+
     for query in copy_table_queries:
         cur.execute(query)
         conn.commit()
 
 
 def load():
-    conn = psycopg2.connect(
-        "host={} dbname={} user={} password={} port={}".format(
-            Variable.get("HOST"), Variable.get("DB_NAME"),Variable.get("DB_USER"),Variable.get("DB_PASSWORD"),Variable.get("DB_PORT")
-        )
-    )
-    cur = conn.cursor()
 
-    upload_file("data/db_etl.csv")
-    upload_file("data/lyrics_etl.csv")
-    load_staging_tables(cur, conn)
-    conn.close()
+    try:
+        conn = psycopg2.connect(
+            "host={} dbname={} user={} password={} port={}".format(
+                Variable.get("HOST"), Variable.get("DB_NAME"),Variable.get("DB_USER"),Variable.get("DB_PASSWORD"),Variable.get("DB_PORT")
+            )
+        )
+        cur = conn.cursor()
+
+        upload_file("data/db_etl.csv")
+        upload_file("data/lyrics_etl.csv")
+        load_staging_tables(cur, conn)
+        conn.close()
+    except Exception as ERROR:
+        logger.info("Issue: " + ERROR)
 
 
 if __name__ == "__main__":

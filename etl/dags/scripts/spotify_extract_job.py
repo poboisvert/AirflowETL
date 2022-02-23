@@ -31,7 +31,7 @@ def spotify_etl_func():
 
     logger.info("Connected to Spotify...")
     data = sp.current_user_recently_played(
-        limit=10
+        limit=LIMIT
     )  
 
     if data is None:
