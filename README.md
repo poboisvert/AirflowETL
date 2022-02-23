@@ -4,7 +4,7 @@
 
 ## Project Overview
 
-![preview](init.png)
+![preview](https://media3.giphy.com/media/TzNjdLQJGL2SqTZB1C/giphy.gif?cid=790b7611408b01116c27972a7f85e97db510f8360004aa06&rid=giphy.gif&ct=g)
 
 This project is an ETL using Spotipy and generate a weekly email of all the songs played and web scraper additionnal information for each artist listenned. I build an ETL pipeline for a data lake hosted on S3 and Redshift. Therefore I fetch data from the API, clean & process the data into analytics tables using Python, and load them back into S3 & Redshift.
 
@@ -20,10 +20,6 @@ The loading step uses (1) SQL to query the data (2) and python to automate a wee
 The S3 bucket is under the region: us-east-1
 The Redshit DB is under: us-east-2
 ```
-
-### Preview
-
-![preview](https://media0.giphy.com/media/JhyYyIZFLlgUnNSKuR/giphy.gif?cid=790b7611dcdadd5d0e2026921de9e779b68afc22c5dfd3d0&rid=giphy.gif&ct=g)
 
 # Resources
 
