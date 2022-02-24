@@ -53,7 +53,9 @@ def spotify_weekly_email_function():
         element = [song_name, min_listened]
         top_5_count.append(element)
 
-    print(top_5_count)
+    logger.info(top_5_count)
+
+    conn.close()
 
     subject = "Test subject"
     message = "This is the message"
@@ -73,6 +75,8 @@ def spotify_weekly_email_function():
     msg["From"] = GMAILEMAILFROM
     msg["To"] = destination
     server.send_message(msg)
+
+    logger.info("Email TOP 5 sent")
 
 
 if __name__ == "__main__":

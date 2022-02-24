@@ -39,19 +39,19 @@ The Redshit DB is under: us-east-2
 
 ```
    CREATE TABLE staging_events_table (
-      id VARCHAR(500) PRIMARY KEY,
-      song_id VARCHAR(500),
-      song_name VARCHAR(500),
-      img VARCHAR(500),
-      duration_ms VARCHAR(500),
-      song_explicit VARCHAR(500),
-      url VARCHAR(500),
-      popularity VARCHAR(500),
-      date_time_played VARCHAR(500),
-      album_id VARCHAR(500),
-      artist_id VARCHAR(500),
-      scraper1 VARCHAR(500),
-      scraper2 VARCHAR(500)
+      id VARCHAR(255) PRIMARY KEY,
+      song_id VARCHAR(255),
+      song_name VARCHAR(255),
+      img VARCHAR(255),
+      duration_ms VARCHAR(255),
+      song_explicit VARCHAR(255),
+      url VARCHAR(255),
+      popularity VARCHAR(255),
+      date_time_played VARCHAR(255),
+      album_id VARCHAR(255),
+      artist_id VARCHAR(255),
+      scraper1 VARCHAR(255),
+      scraper2 VARCHAR(255)
     )
    """
 ```
@@ -63,8 +63,6 @@ The Redshit DB is under: us-east-2
 > python3 -m venv env
 
 > source env/bin/activate
-
-> cd api && export AIRFLOW_HOME=$PWD
 
 ---
 
@@ -90,15 +88,25 @@ NOTE: Make sure you set load_example variable to "False" in airflow.cfg file.
 
 #### Steps
 
-All files used to create load and delete he redshift
+- nano ~/.aws/credentials
+
+- export AIRFLOW_HOME=$PWD
+
+- airflow db init
+
+- User https://airflow.apache.org/docs/apache-airflow/stable/security/webserver.html
+
+- airflow variables import init/variables.json
+
+##### All files used to create load and delete he redshift
 
 - Step 1: Create Redshift
 
-  - python create_cluster_redshift.py
+  - python 1_create_cluster_redshift.py
 
 - Step 2: Initialize Redshift Database
 
-  - python create_tables.py
+  - python 2_create_tables.py
 
 - Step 5: Delete Redshift (When done with the project)
 
@@ -106,13 +114,7 @@ All files used to create load and delete he redshift
 
 ## etl/init
 
-### Init variables
-
-> airflow variables import init/variables.json
-
 ## Airflow Installation
-
-> airflow db init
 
 > cd api && airflow scheduler | TO RUN DO NOT FORGET cd etl && export AIRFLOW_HOME=$PWD and PYTHONPATH
 

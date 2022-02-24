@@ -49,7 +49,7 @@ def load_staging_tables(cur, conn):
 
 
 def load():
-
+    
     try:
         conn = psycopg2.connect(
             "host={} dbname={} user={} password={} port={}".format(
@@ -63,7 +63,7 @@ def load():
         load_staging_tables(cur, conn)
         conn.close()
     except Exception as ERROR:
-        logger.info("Issue: " + ERROR)
+        logger.info(ERROR)
 
 
 if __name__ == "__main__":

@@ -11,4 +11,4 @@ format = \
     '<cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>'
 
 
-logger.add("utils/logs/logger.log", format=format)
+logger.add("logger.log", format=format)

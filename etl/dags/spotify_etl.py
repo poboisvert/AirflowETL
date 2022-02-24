@@ -10,7 +10,7 @@ from datetime import timedelta, datetime
 import os
 
 START_DATE = datetime(2021, 12, 1)
-DAG_ID = os.path.basename(__file__).replace(".pyc", "").replace(".py", "")
+DAG_ID = os.path.basename(__file__).replace(".py", "")
 
 default_args = {
     "depends_on_past": False,

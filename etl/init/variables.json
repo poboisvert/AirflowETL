@@ -1,7 +1,4 @@
 {
-  "CLIENT_ID": "EXAMPLE",
-  "CLIENT_SECRET": "EXAMPLE",
-  "spotify_req_limit": "5",
   "KEY_IAM_AWS": "EXAMPLEEXAMPLE",
   "SECRET_IAM_AWS": "EXAMPLE/EXAMPLE/YyN0T8ElZ2kQ",
   "LOG_DATA": "s3://EXAMPLE/data/db_etl.csv",
@@ -12,5 +9,7 @@
   "DB_NAME": "dwh",
   "DB_USER": "dwhuser",
   "DB_PASSWORD": "dwhPassword00",
-  "DB_PORT": "5439"
+  "DB_PORT": "5439",
+  "FB_LOGIN": "LOGIN@LOGIN.com",
+  "FB_PASSWORD": "PASScom"
 }

@@ -4,7 +4,6 @@ import numpy as np
 import json
 import logging
 
-## using existing module to specify location of the .env file
 from pathlib import Path
 import os
 import requests
@@ -14,32 +13,38 @@ import re
 from spotify.lyrics_queries import lyrics
 from spotify.api import credentials
 from utils.logger import logger
+from spotify.get_token import token_web
 from airflow.models import Variable
 
 # load_dotenv()
 # env_path = Path(".") / ".env"
 # load_dotenv(dotenv_path=env_path)
 
-CLIENT_ID = Variable.get("CLIENT_ID")
-CLIENT_SECRET = Variable.get("CLIENT_SECRET")
-LIMIT = Variable.get("spotify_req_limit")
+#CLIENT_ID = Variable.get("CLIENT_ID")
+#CLIENT_SECRET = Variable.get("CLIENT_SECRET")
+#LIMIT = Variable.get("spotify_req_limit")
 
 
 def spotify_etl_func():
 
-    sp = credentials(CLIENT_ID, CLIENT_SECRET, LIMIT)
+    # sp = credentials(CLIENT_ID, CLIENT_SECRET, LIMIT)
+
+    # data = sp.current_user_recently_played(
+    #     limit=LIMIT
+    # )  
+
+
+    # Hot fix for docker - web browser token Spotify
+    data = token_web(LIMIT=10)
 
     logger.info("Connected to Spotify...")
-    data = sp.current_user_recently_played(
-        limit=LIMIT
-    )  
 
     if data is None:
         logger.info("No songs downloaded. Finishing execution")
         return False
 
     logger.info("Writing raw JSON file...")
-    with open("data/dump.json", "w", encoding="utf-8") as f:
+    with open("data/dump.json", "w") as f:
         json.dump(data, f)
 
     song_list = []
@@ -57,7 +62,7 @@ def spotify_etl_func():
         album_id = song["track"]["album"]["id"]
         artist_id = song["track"]["album"]["artists"][0]["name"]
 
-        # bs4 - Scraper
+        # Release Year
         try:
             r = requests.get(
                 "https://musicbrainz.org/search?query={}+{}&type=release&method=indexed".format(
@@ -76,7 +81,7 @@ def spotify_etl_func():
         except IndexError:
             scraper_year = 0
 
-        # Get genre
+        #  bday
         try:
             w = requests.get(
                 "https://en.wikipedia.org/wiki/{}".format(artist_id).replace(" ", "_")
@@ -99,8 +104,9 @@ def spotify_etl_func():
 
         except IndexError:
             scraper_bday = 0
+            logger.info("scraper_bday - error")
 
-        # Find Lyrics
+        # Lyrics
         try:
             lyrics_song = lyrics(song_name, artist_id)
             print(lyrics_song)
@@ -134,20 +140,16 @@ def spotify_etl_func():
         }
         lyrics_list.append(lyrics_element)
 
-    # Converting to DataFrame
     song_df = pd.DataFrame.from_dict(song_list)
     lyrics_df = pd.DataFrame.from_dict(lyrics_list)
 
-    # Primary Key Check
     if pd.Series(song_df["date_time_played"]).is_unique:
         pass
     else:
         raise Exception("Primary Key check is violated")
 
-    # date_time_played is an object (data type) changing to a timestamp
     song_df["date_time_played"] = pd.to_datetime(song_df["date_time_played"])
 
-    # Check for nulls
     if song_df.isnull().values.any():
         raise Exception("Null values found")
 

@@ -3,7 +3,6 @@ from spotipy.oauth2 import SpotifyOAuth
 
 
 def credentials(CLIENT_ID, CLIENT_SECRET, LIMIT):
-    # Setup the Developer ENV from Spotify Website
     spotify_client_id = CLIENT_ID
     spotify_client_secret = CLIENT_SECRET
     spotify_redirect_url = "http://localhost:8080"
@@ -16,6 +15,6 @@ def credentials(CLIENT_ID, CLIENT_SECRET, LIMIT):
             redirect_uri=spotify_redirect_url,
             scope="user-read-recently-played",
         )
-    )  # Here is what we cant to fetch from the API
+    )  
 
     return sp
