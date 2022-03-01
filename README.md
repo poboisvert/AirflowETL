@@ -132,12 +132,13 @@ Redshift is a fully managed, cloud-based, petabyte-scale data warehouse service 
 
 > You now have 2 new Redshift rules (0.0.0.0/0 AND ::/0)
 
-## Web Scraper
+## Current issues and future development
 
-Using Beautiful Soup, the python service is schedule to confirm the birthday date and the release date from:
+- Using bs4 with xpath give the token, but we can't deploy the airflow on Docker with a M1 chip.
 
-- Wikipedia
-- musicbrainz.org
+- Dataframe and save and not passed as a XCom using a custom backend that save the file in an S3 Bucket.
+
+- Data save in Redshift may be duplicated.
 
 ## References
 
