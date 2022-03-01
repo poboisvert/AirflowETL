@@ -138,7 +138,7 @@ Redshift is a fully managed, cloud-based, petabyte-scale data warehouse service 
 
 - Dataframe and save and not passed as a XCom using a custom backend that save the file in an S3 Bucket.
 
-- Data save in Redshift may be duplicated.
+- Data saved in Redshift may be duplicated.
 
 ## References
 
